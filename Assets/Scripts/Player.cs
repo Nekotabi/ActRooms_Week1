@@ -10,8 +10,7 @@ public class Player : MonoBehaviour
     private Vector3 origin;
     [SerializeField] LayerMask groundMask;
     private const float moveSpeed = 5f;
-    private  const float jumpingPower = 5f;
-    private const float gravity = 9.8f;
+    private const float jumpingPower = 5f;
     private const float checkDistance = 10f;
     [SerializeField] private bool isGround;
 
@@ -52,10 +51,19 @@ public class Player : MonoBehaviour
     {
         plRigid.linearVelocity = new Vector3(direct.x * moveSpeed, plRigid.linearVelocity.y, direct.z * moveSpeed);
 
-        origin = myTrans.position;
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
 
-        isGround = Physics.SphereCast(origin, 0.5f, Vector3.down, out _, checkDistance, groundMask);
-        Debug.Log(isGround);
+        isGround = Physics.CheckSphere(
+            origin + Vector3.down * 0.9f,
+            0.3f,
+            groundMask
+        );
+
+        isGround = Physics.CheckSphere(
+    origin + Vector3.down * 0.9f,
+    0.3f,
+    groundMask
+);
     }
 
     private void OnMove(InputAction.CallbackContext _callback)

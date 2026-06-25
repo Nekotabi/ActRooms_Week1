@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    //どこからでもアクセスできるように。
+    public static GameManager Instance { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        // すでに存在している場合は自分自身を破棄する
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // 自分自身をインスタンスとして登録
+        Instance = this;
+
+        // シーンをまたいでもオブジェクトを破壊しない
+        DontDestroyOnLoad(gameObject);
     }
 }

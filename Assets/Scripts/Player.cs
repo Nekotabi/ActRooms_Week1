@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] LayerMask groundMask;
     private const float moveSpeed = 5f;
     private const float jumpingPower = 5f;
-    private const float checkDistance = 10f;
+    private const float deadLineSpeed = -40.0f;
     [SerializeField] private bool isGround;
 
     private void Awake()
@@ -53,17 +53,10 @@ public class Player : MonoBehaviour
 
         Vector3 origin = transform.position + Vector3.up * 0.1f;
 
-        isGround = Physics.CheckSphere(
-            origin + Vector3.down * 0.9f,
-            0.3f,
-            groundMask
-        );
+        isGround = Physics.CheckSphere(origin + Vector3.down * 0.9f, 0.3f, groundMask);
 
-        isGround = Physics.CheckSphere(
-    origin + Vector3.down * 0.9f,
-    0.3f,
-    groundMask
-);
+        if(plRigid.linearVelocity.y < deadLineSpeed)
+            Debug.Log("ご臨の終でございやしたねwww");
     }
 
     private void OnMove(InputAction.CallbackContext _callback)
